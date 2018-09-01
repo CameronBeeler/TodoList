@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane fx:id="MainWindow"
+            fx:controller="com.cambeeler.todolist.DialogueController"
+            xmlns:fx="http://javafx.com/fxml" >
+    <headerText>
+        this is a great location for text
+    </headerText>
+    <content>
+        <GridPane vgap="10" hgap="10" >
+            <Label text="Short description" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <TextField GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Long description" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+            <TextArea GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <Label text="Due Date" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <DatePicker GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            
+
+            <TextField GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+            <TextField GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+        </GridPane>
+    </content>
+</DialogPane>

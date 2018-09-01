@@ -9,7 +9,7 @@ class TodoItem
     private LocalDate todoDeadLine;
 
     public
-    TodoItem(String longDescription, String shortDescription, LocalDate todoDeadLine)
+    TodoItem(String shortDescription, String longDescription, LocalDate todoDeadLine)
     {
         this.longDescription = longDescription;
         this.shortDescription = shortDescription;
@@ -51,4 +51,16 @@ class TodoItem
     {
         this.todoDeadLine = todoDeadLine;
     }
+
+    @Override
+    public
+    String toString()
+    {
+//        return "TodoItem{" +
+//               "todoDeadLine=" + todoDeadLine +
+//               ", longDescription='" + longDescription + '\'' +
+//               ", shortDescription='" + shortDescription + '\'' +
+//               '}';
+        return shortDescription;
+   }
 }
