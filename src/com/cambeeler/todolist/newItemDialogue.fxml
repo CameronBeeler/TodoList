@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<DialogPane fx:id="MainWindow"
+<DialogPane fx:id="FileMenuDialog" headerText="New To Do Window"
             fx:controller="com.cambeeler.todolist.DialogueController"
             xmlns:fx="http://javafx.com/fxml" >
     <headerText>
@@ -15,16 +12,16 @@
     <content>
         <GridPane vgap="10" hgap="10" >
             <Label text="Short description" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-            <TextField GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-            <Label text="Long description" GridPane.rowIndex="1" GridPane.columnIndex="2" />
-            <TextArea GridPane.rowIndex="1" GridPane.columnIndex="0" />
-            <Label text="Due Date" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-            <DatePicker GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-            
-
-            <TextField GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-
-            <TextField GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+            <TextField fx:id="shortValue" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label text="Long description" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <TextArea fx:id="longValue" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <Label text="Due by Date" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <DatePicker fx:id="tdDue" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
         </GridPane>
     </content>
 </DialogPane>
+
+<!--Allows us to create four properties-->
+<!--Layout manager used for dialogues-->
+<!--header graphic content and buttons-->
+<!--each property expects a control-->

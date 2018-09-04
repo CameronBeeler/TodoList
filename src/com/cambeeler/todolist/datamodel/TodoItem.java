@@ -52,6 +52,12 @@ class TodoItem
         this.todoDeadLine = todoDeadLine;
     }
 
+    public void clear()
+    {
+        this.setLongDescription(null);
+        this.setShortDescription(null);
+        this.setTodoDeadLine(null);
+    }
     @Override
     public
     String toString()

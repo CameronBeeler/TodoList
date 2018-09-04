@@ -31,10 +31,17 @@ class TodoData
         dtf = DateTimeFormatter.ofPattern("dd MMM yyyy");
     }
 
+
+
     public
     List<TodoItem> getTodoItems()
     {
         return todoItems;
+    }
+
+    public void addTodoItem(TodoItem tdi)
+    {
+        todoItems.add(tdi);
     }
 
         public
