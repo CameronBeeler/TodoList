@@ -16,6 +16,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.ToggleButton?>
 <BorderPane fx:id="MainWindow"
             fx:controller="com.cambeeler.todolist.Controller"
             xmlns:fx="http://javafx.com/fxml" >
@@ -26,7 +27,7 @@
                     <items>
                         <MenuItem fx:id="NewTodo" text="create todo item" onAction="#showNewItemDialogue"/>
                         <SeparatorMenuItem/>
-                        <MenuItem fx:id="Exit" text="Exit"/>
+                        <MenuItem fx:id="Exit" text="Exit" onAction="#exitApp"/>
                     </items>
                 </Menu>
             </MenuBar>
@@ -34,7 +35,7 @@
             <HBox>
                 <Button onAction="#showNewItemDialogue" >
                     <tooltip>
-                        <Tooltip text="Add a new todo item" />  
+                        <Tooltip text="Add a new todo item" />
                     </tooltip>
 
                     <graphic>
@@ -43,6 +44,16 @@
                         </ImageView>
                     </graphic>
                 </Button>
+                <ToggleButton fx:id="filterToggleButton" onAction="#filterButtonHandler">
+                    <tooltip>
+                        <Tooltip text="Button Down: show due items only" />
+                    </tooltip>
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/toolbarButtonGraphics/navigation/Up24.gif" />
+                        </ImageView>
+                    </graphic>
+                </ToggleButton>
             </HBox>
         </ToolBar>
         </VBox>

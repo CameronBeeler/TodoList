@@ -2,8 +2,11 @@ package com.cambeeler.todolist;
 
 import com.cambeeler.todolist.datamodel.TodoData;
 import com.cambeeler.todolist.datamodel.TodoItem;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,8 +22,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Controller {
     private List<TodoItem> todoItemList = new ArrayList<>();
@@ -38,12 +43,20 @@ public class Controller {
     @FXML
     private ContextMenu         listContextMenu;
 
+    @FXML
+    private ToggleButton        filterToggleButton;
+
+    private
+    FilteredList<TodoItem>      filteredList;
+
+    private Predicate<TodoItem> allItems;
+    private Predicate<TodoItem> dueItems;
 
     @FXML
     public void initialize()
     {
 
-//        Action handler for the new menu item used for deleting todo items
+//        ACTION HANDLER  for the new menu item used for deleting todo items
         listContextMenu = new ContextMenu();
         MenuItem deleteMenuItem = new MenuItem("Delete");
         deleteMenuItem.setOnAction(new EventHandler<ActionEvent>()
@@ -58,16 +71,14 @@ public class Controller {
             }
         });
 
-        listContextMenu.getItems().addAll(deleteMenuItem);
 
-        todoListView.setItems(TodoData.getInstance().getTodoItems());
-//                getItems().setAll(TodoData.getInstance().getTodoItems());
-        todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        listContextMenu.getItems().addAll(deleteMenuItem);
         todoListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TodoItem>()
         {
 
 
-//  The listener is declared in the parameter list, and is code inserted instructions to the UI Event Handler
+//  The LISTENER is declared in the parameter list, and is code inserted instructions to the UI Event Handler
 //  where the actual event handler will 'trigger' a response on the listener every time the todoListView value is changed.
 
             @Override
@@ -83,8 +94,54 @@ public class Controller {
                 }
             }
         });
+
+        allItems = new Predicate<TodoItem>()
+        {
+            @Override
+            public
+            boolean test(TodoItem todoItem)
+            {
+                return true;
+            }
+        };
+
+        dueItems = new Predicate<TodoItem>()
+        {
+            @Override
+            public
+            boolean test(TodoItem todoItem)
+            {
+                return (todoItem.getTodoDeadLine().isBefore(LocalDate.now().plusDays(1)));
+
+            }
+        };
+
+        filteredList = new FilteredList<TodoItem>(TodoData.getInstance().getTodoItems(), allItems);
+
+
+          SortedList < TodoItem > sortedList = new SortedList<TodoItem>( filteredList,
+                  new Comparator<TodoItem>()
+                  {
+                      @Override
+                      public
+                      int compare(TodoItem o1, TodoItem o2)
+                      {
+//  POSITIVE 1 return if TodoItem 01 is greater than 02
+//  NEGATIVE -1 return if TodoItem 01 is lesser than 02
+//  ZERO if TODOITEM 01 == 02
+
+                          return o1.getTodoDeadLine().compareTo(
+                                  o2.getTodoDeadLine());
+                      }
+                  });
+
+//        todoListView.setItems(TodoData.getInstance().getTodoItems());
+        todoListView.setItems(sortedList);
+        todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         todoListView.getSelectionModel().selectFirst();
 
+
+//        CELL FACTORY & CALLBACK FOR DATA MANIPULATION
         todoListView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>()
         {
 //            Callback has two (2) parameters
@@ -141,6 +198,7 @@ public class Controller {
         });
     }
 
+//    IDENTIFYING WHEN A KEY (DELETE) IS PRESSED ON AN ITEM
     @FXML
     public
     void handleKeyPressed(KeyEvent keyEvent)
@@ -155,6 +213,7 @@ public class Controller {
         }
     }
 
+//    SHOWING THE ADDED TODO ITEM AFTER SUCCESSFUL COMPLETION
     @FXML
     public void showNewItemDialogue()
     {
@@ -193,8 +252,8 @@ public class Controller {
     }
 
 
-    //  The delete item dialog
-    //  set a confirmation dialog to verify intent
+//  The delete item dialog
+//  set a confirmation dialog to verify intent
 
     public
     void deleteItem(TodoItem item)
@@ -210,5 +269,42 @@ public class Controller {
         }
     }
 
+
+//    KREATING A FILTER ON THE DUE ITEMS ONLY
+
+    @FXML
+    public void filterButtonHandler()
+    {
+        TodoItem selectedItem = todoListView.getSelectionModel().getSelectedItem();
+        if(filterToggleButton.isSelected())
+        {
+            filteredList.setPredicate(dueItems);
+            if(filteredList.isEmpty())
+            {
+                LongTextDescription.setText("");
+                dueDatesText.setText("");
+            }
+            else if(filteredList.contains(selectedItem))
+            {
+                todoListView.getSelectionModel().select(selectedItem);
+            }
+            else
+            {
+                todoListView.getSelectionModel().selectFirst();
+            }
+        }
+        else
+        {
+            filteredList.setPredicate(allItems);
+            todoListView.getSelectionModel().select(selectedItem);
+
+        }
+    }
+
+    @FXML
+    public void exitApp()
+    {
+        Platform.exit();
+    }
 
 }
