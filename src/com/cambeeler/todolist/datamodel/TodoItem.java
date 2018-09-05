@@ -58,15 +58,5 @@ class TodoItem
         this.setShortDescription(null);
         this.setTodoDeadLine(null);
     }
-    @Override
-    public
-    String toString()
-    {
-//        return "TodoItem{" +
-//               "todoDeadLine=" + todoDeadLine +
-//               ", longDescription='" + longDescription + '\'' +
-//               ", shortDescription='" + shortDescription + '\'' +
-//               '}';
-        return shortDescription;
-   }
+
 }

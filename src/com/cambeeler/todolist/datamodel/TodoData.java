@@ -1,6 +1,7 @@
 package com.cambeeler.todolist.datamodel;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,9 +17,9 @@ import java.util.List;
 public
 class TodoData
 {
-    private static TodoData instance = new TodoData(); // one time load in a static variable - it belongs to the Class...
-    private static String filename = "todolistitems.txt";
-    private List<TodoItem> todoItems;
+    private static TodoData       instance = new TodoData(); // one time load in a static variable - it belongs to the Class...
+    private static String         filename = "todolistitems.txt";
+    private        ObservableList<TodoItem> todoItems;
     private DateTimeFormatter dtf;
 
     public static TodoData getInstance() // factory method..
@@ -34,7 +35,7 @@ class TodoData
 
 
     public
-    List<TodoItem> getTodoItems()
+    ObservableList<TodoItem> getTodoItems()
     {
         return todoItems;
     }
@@ -42,6 +43,11 @@ class TodoData
     public void addTodoItem(TodoItem tdi)
     {
         todoItems.add(tdi);
+    }
+
+    public void deleteTodoItem(TodoItem item)
+    {
+        todoItems.remove(item);
     }
 
         public

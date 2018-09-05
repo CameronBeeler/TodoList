@@ -11,29 +11,51 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 
 
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
 <BorderPane fx:id="MainWindow"
             fx:controller="com.cambeeler.todolist.Controller"
             xmlns:fx="http://javafx.com/fxml" >
     <top>
-        <MenuBar>
-            <Menu fx:id="MenuBar" text="File">
-                <items>
-                    <MenuItem fx:id="NewTodo" text="create todo item" onAction="#showNewItemDialogue"/>
-                    <SeparatorMenuItem/>
-                    <MenuItem fx:id="Exit" text="Exit"/>
-                </items>
-            </Menu>
-        </MenuBar>
+        <VBox>
+            <MenuBar>
+                <Menu fx:id="MenuBar" text="File">
+                    <items>
+                        <MenuItem fx:id="NewTodo" text="create todo item" onAction="#showNewItemDialogue"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem fx:id="Exit" text="Exit"/>
+                    </items>
+                </Menu>
+            </MenuBar>
+        <ToolBar>
+            <HBox>
+                <Button onAction="#showNewItemDialogue" >
+                    <tooltip>
+                        <Tooltip text="Add a new todo item" />  
+                    </tooltip>
+
+                    <graphic>
+                        <ImageView>
+                            <Image url="@/toolbarButtonGraphics/general/New24.gif" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+        </ToolBar>
+        </VBox>
     </top>
 
     <left>
-        <ListView fx:id="todoListView"    >
+        <ListView fx:id="todoListView" onKeyPressed="#handleKeyPressed">
 
         </ListView>
      </left>
     <center>
         <VBox>
-            <TextArea fx:id="LongTextDescription" VBox.vgrow="ALWAYS" />
+            <TextArea fx:id="LongTextDescription" VBox.vgrow="ALWAYS" wrapText="true"/>
             <HBox style="-fx-background-color: white">
                 <Label text="Due Date:  "  >
                     <font>
